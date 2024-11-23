@@ -1,5 +1,5 @@
 { config, lib, pkgs, inputs, trusted, ... }: with lib; {
-  options.hardware.vfio.qemu = {
+  options.virtualisation.QEMU = {
     enable = mkEnableOption "QEMU VMs";
     package = mkOption {
       type = types.package;
