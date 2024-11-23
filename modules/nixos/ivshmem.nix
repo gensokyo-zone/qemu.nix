@@ -21,13 +21,15 @@
       };
       count = mkOption {
         type = types.int;
+        default = config.vectors;
       };
       share = mkOption {
         type = types.bool;
         default = true;
       };
       serverScript = mkOption {
-        type = types.str;
+        type = types.lines;
+        default = "";
       };
       object = mkOption {
         type = unmerged.type;
@@ -37,7 +39,7 @@
       };
     };
     config = {
-      serverScript = mkIf (config.type == "doorbell") ''
+      serverScript = mkIf (config.mode == "doorbell") ''
         if [[ ! -f ${config.pidfile} ]] || ! kill -s 0 $(cat ${config.pidfile}) 2> /dev/null; then
           ivshmem-server -p ${config.pidfile} -S ${config.path} -l ${toString config.sizeMB}M -n ${toString config.count}
         fi
